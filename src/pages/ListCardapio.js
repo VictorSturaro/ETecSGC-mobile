@@ -6,8 +6,9 @@ import CardapioList from '../components/CardapioList';
 import logo from '../assets/logo.png';
 
 
-export default function ListCardapio() {
+export default function ListCardapio({ navigation }) {
     const [dia, setDia] = useState();
+    const rm = navigation.getParam('rm');
 
     useEffect(() => {
     }, []);

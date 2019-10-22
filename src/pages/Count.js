@@ -1,69 +1,120 @@
-import React from 'react';
-import { Text,TouchableOpacity, Image, StyleSheet, SafeAreaView } from 'react-native';
+import React, { useEffect }from 'react';
+import { SafeAreaView, TouchableOpacity, Text, AsyncStorage, Image, StyleSheet } from 'react-native';
+
+import api from '../services/api';
 
 import logo from '../assets/logo.png';
+export default function Login({ navigation }) {
 
-export default function Count({ navigation }) {
-  function handleNavigate() {
-      navigation.navigate('ListCardapio');
-  }
+    const dia = navigation.getParam('dia');
+    const rm = navigation.getParam('rm');
 
-  return (
-      <SafeAreaView style={styles.container}>
-          <Image source= {logo} style={styles.img}/>
-          <Text style={styles.pratotexto}>QUANTOS PRATOS?</Text>
-          
-          <TouchableOpacity onPress={handleNavigate} style={styles.button}>
-              <Text style={styles.buttonText}>1</Text>
-          </TouchableOpacity>
+    async function handleSubmit(rm) {
+        const response = await api.post('/soma', {
+            soma: 1,
+            dia: dia,
+            rm: rm,
+        })
 
-          <TouchableOpacity onPress={handleNavigate} style={styles.button}>
-              <Text style={styles.buttonText}>2</Text>
-          </TouchableOpacity>
+        navigation.navigate('ListCardapio', { rm });
+    }
 
-          <TouchableOpacity onPress={handleNavigate} style={styles.button}>
-              <Text style={styles.buttonText}>3</Text>
-          </TouchableOpacity>
-      </SafeAreaView>
-  )
+    async function handleSubmit2(rm) {
+        const response = await api.post('/soma', {
+            soma: 2,
+            dia: dia,
+            rm: rm,
+        })
+
+        navigation.navigate('ListCardapio', { rm });
+    }
+
+    async function handleSubmit3(rm) {
+        const response = await api.post('/soma', {
+            soma: 3,
+            dia: dia,
+            rm: rm,
+        })
+
+        navigation.navigate('ListCardapio',{ rm });
+    }
+    
+    async function handleReturn(rm) {
+        navigation.navigate('ListCardapio', { rm });
+    }
+
+    return(
+    <SafeAreaView style={styles.container}>
+        <Image style={styles.logo} source={logo} />
+        <Text style={styles.text}>Quantos pratos deseja comer?</Text>
+        <TouchableOpacity onPress={() => handleSubmit(rm)} value={soma=1} style={styles.button}>
+                <Text style={styles.buttonText}>1 Prato</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => handleSubmit2(rm)} style={styles.button}>
+            <Text style={styles.buttonText}>2 Pratos</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => handleSubmit3(rm)} style={styles.button}>
+            <Text style={styles.buttonText}>3 Pratos</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => handleReturn(rm)} style={styles.buttonw}>
+            <Text style={styles.buttonText}>Cancelar</Text>
+        </TouchableOpacity>
+    </SafeAreaView>
+    )
 }
 
 const styles = StyleSheet.create({
-  container: {
-      marginTop: 70, 
-  },
+    container: {
+        flex:1,
+    },
 
-  img: {
-      height: 100 ,
-      resizeMode: "contain",
-      alignSelf: 'center',
-      marginTop: 10,
-  },
+    logo:{
+        height: 100,
+        resizeMode: "contain",
+        alignSelf: 'center',
+        marginTop: '7%',
+    },
 
-  pratotexto: {
-    fontSize: 14,
+    text: {
+        marginHorizontal: '12%',
+        fontSize: 20,
         fontWeight: 'bold',
-        color: '#333',
-        marginTop: 30,
-        marginBottom: 50,
+        textAlign: 'auto',
+        marginTop: 25,
+    },  
+
+    button: {
+        display: 'flex',
         marginHorizontal: '10%',
-        textAlign: 'center'
-  },
+        marginVertical: 10,
+        height: 35,
+        backgroundColor: '#f05a5b',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 2,
+        marginBottom: 10,
+    },
 
-  button: {
-      marginHorizontal: '10%',
-      marginVertical: 10,
-      height: 35,
-      backgroundColor: '#f05a5b',
-      justifyContent: 'center',
-      alignItems: 'center',
-      borderRadius: 2,
-      marginBottom: 30,
-  },
+    buttonText: {
+        color: '#fff',
+        fontWeight: 'bold',
+        fontSize:16,
+    },    
 
-  buttonText: {
-      color: '#fff',
-      fontWeight: 'bold',
-      fontSize:16,
-  },
+    buttonw: {
+        marginHorizontal: '10%',
+        marginVertical: 10,
+        height: 35,
+        backgroundColor: '#C0C0C0',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 2,
+        marginBottom: 10,
+    },
+
+    buttonwText: {
+        color: '#333',
+        fontWeight: 'bold',
+        fontSize:16,
+    },  
 });

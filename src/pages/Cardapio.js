@@ -9,13 +9,15 @@ export default function Cardapio({ navigation }) {
     const dia = navigation.getParam('dia');
     const desc = navigation.getParam('desc');
     const ing = navigation.getParam('ing');
+    const rm = navigation.getParam('rm');
+
 
     function handleNavigate() {
         navigation.navigate('ListCardapio');
     }
 
-    function handleCount() {
-        navigation.navigate('Count');
+    function handleCount(dia, rm) {
+        navigation.navigate('Count',{ dia, rm });
     }
 
     return (
@@ -25,7 +27,7 @@ export default function Cardapio({ navigation }) {
             <Image style={styles.thumbnail} source={{ uri: thumb }} />
             <Text style={styles.desc}>{ing}</Text>
             <Text style={styles.negr}>Ingredientes: <Text style={styles.ing}>{desc}</Text></Text>
-            <TouchableOpacity onPress={handleCount} style={styles.button}>
+            <TouchableOpacity onPress={() => handleCount(dia, rm)} style={styles.button}>
                 <Text style={styles.buttonText}>Vou Comer</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={handleNavigate} style={styles.buttonw}>

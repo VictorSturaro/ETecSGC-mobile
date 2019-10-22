@@ -16,7 +16,7 @@ export default function Login({ navigation }) {
     })
   }, []);
 
-  async function handleSubmit() {
+  async function handleSubmit(rm) {
     const response = await api.post('/rm', {
       rm
     })
@@ -25,7 +25,7 @@ export default function Login({ navigation }) {
 
     await AsyncStorage.setItem('rm', _id);
 
-    navigation.navigate('ListCardapio');
+    navigation.navigate('ListCardapio', { rm });
   }
 
   return (
@@ -45,7 +45,7 @@ export default function Login({ navigation }) {
           onChangeText={setRm}
         />
 
-       <TouchableOpacity onPress={handleSubmit} style={styles.button}>
+       <TouchableOpacity onPress={() => handleSubmit(rm)} style={styles.button}>
          <Text style={styles.buttonText}>Login</Text>
        </TouchableOpacity>
       </View>

@@ -5,6 +5,7 @@ import { View, Text, FlatList, ScrollView, StyleSheet, Image, TouchableOpacity }
 import api from '../services/api';
 
 function CardapioList({ navigation }) {
+    const rm = navigation.getParam('rm');
     const [cardapio, setCardapio] = useState();
 
     useEffect(() => {
@@ -19,8 +20,8 @@ function CardapioList({ navigation }) {
         loadCardapio();
     }, []);
 
-    function handleNavigate(id, dia, ing , desc, thumb) {
-        navigation.navigate('Cardapio', { id, dia, desc, ing, thumb });
+    function handleNavigate(id, dia, ing , desc, thumb, rm) {
+        navigation.navigate('Cardapio', { id, dia, desc, ing, thumb, rm });
     }
 
     return (
@@ -34,7 +35,7 @@ function CardapioList({ navigation }) {
                     <View style={styles.listItem}> 
                         <Image style={styles.thumbnail} source={{ uri: item.thumbnail_url }} />
                         <Text style={styles.dia}>{item.dia}</Text>
-                        <TouchableOpacity onPress={() => handleNavigate(item._id, item.dia, item.descricao, item.ingredientes, item.thumbnail_url)} style={styles.button}>
+                        <TouchableOpacity onPress={() => handleNavigate(item._id, item.dia, item.descricao, item.ingredientes, item.thumbnail_url, rm)} style={styles.button}>
                             <Text style={styles.buttonText}>Ver Cardapio do Dia</Text>
                         </TouchableOpacity>
                     </View>
